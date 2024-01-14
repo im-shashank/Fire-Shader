@@ -1,0 +1,37 @@
+[gd_scene load_steps=9 format=3 uid="uid://uf47xq4d2ot"]
+
+[ext_resource type="Shader" path="res://shaders/fire_shader.gdshader" id="1_6ju40"]
+
+[sub_resource type="Gradient" id="Gradient_amw21"]
+offsets = PackedFloat32Array(0, 0.0226244, 0.208145, 0.393665, 0.687783, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.85098, 0.887283, 0.207126, 0.23131, 1, 0.880198, 0.415946, 0.209072, 1, 0.897331, 0.585831, 0.312539, 1, 0.895218, 0.519498, 0.131325, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5aojy"]
+gradient = SubResource("Gradient_amw21")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ju63t"]
+seed = 5
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7r72g"]
+seamless = true
+noise = SubResource("FastNoiseLite_ju63t")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jjgkn"]
+shader = ExtResource("1_6ju40")
+shader_parameter/scroll1 = Vector2(0, 0.5)
+shader_parameter/scroll2 = Vector2(0.01, 0.1)
+shader_parameter/texture1 = SubResource("NoiseTexture2D_7r72g")
+shader_parameter/colorGradient = SubResource("GradientTexture2D_5aojy")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_v7eo4"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_je1ai"]
+seamless = true
+noise = SubResource("FastNoiseLite_v7eo4")
+
+[node name="FireShader" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_jjgkn")
+position = Vector2(575, 308)
+texture = SubResource("NoiseTexture2D_je1ai")
